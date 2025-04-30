@@ -3,12 +3,20 @@ const glob = require("glob");
 const path = require("path");
 const { pathToFileURL } = require("url");
 const { Command } = require("commander");
-const { getCommands } = require(path.join(
-  __dirname,
-  "src/templates",
-  "soara-registry"
-));
 
+let registry;
+try {
+  registry = require("@soara/cli/templates/soara-registry");
+} catch (err) {
+  try {
+    registry = require(path.join(__dirname, "src/templates", "soara-registry"));
+  } catch (err) {
+    console.error("❌ Failed to load command registry:", err.message);
+    process.exit(1);
+  }
+}
+
+const { getCommands } = registry;
 const patterns = [
   "src/common/soara-cli/cli.js",
   "node_modules/@soara/**/src/common/soara-cli/cli.js",
