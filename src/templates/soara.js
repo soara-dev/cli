@@ -6,7 +6,7 @@ const { Command } = require("commander");
 
 let registry;
 try {
-  registry = require("@soara/cli/templates/soara-registry");
+  registry = require("@soara/cli/src/templates/soara-registry");
 } catch (err) {
   try {
     registry = require(path.join(__dirname, "src/templates", "soara-registry"));
