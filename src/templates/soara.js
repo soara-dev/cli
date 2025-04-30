@@ -17,7 +17,7 @@ try {
 }
 
 const { getCommands } = registry;
-const patterns = ['src/common/soara-cli/command/*.js', 'node_modules/@soara/**/src/common/soara-cli/command/*.js'];
+const patterns = ['src/common/soara-cli/commands/*.js', 'node_modules/@soara/**/src/common/soara-cli/commands/*.js'];
 const allMatches = patterns.flatMap((pattern) => glob.sync(pattern, { absolute: true }));
 if (allMatches.length === 0) process.exit(0);
 
