@@ -1,0 +1,17 @@
+{
+  "name": "@soara/cli",
+  "version": "0.0.3",
+  "description": "soara stubs cli",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "soara",
+    "stubs",
+    "cli"
+  ],
+  "author": "Soara",
+  "license": "ISC"
+}
