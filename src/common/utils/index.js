@@ -27,6 +27,10 @@ exports.copyTemplate = (src, dest, moduleName) => {
       .replace(/__NAME__/g, moduleName.toUpperCase())
       .replace(/__name-kebab__/g, camelizeModuleName);
 
+    if (destName.endsWith('.stub')) {
+      destName = destName.replace(/\.([a-z]+)?\.stub$/, '.$1');
+    }
+
     const destPath = path.join(dest, destName);
 
     if (entry.isDirectory()) {
