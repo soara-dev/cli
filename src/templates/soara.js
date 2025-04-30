@@ -1,30 +1,25 @@
 #!/usr/bin/env node
-const glob = require("glob");
-const path = require("path");
-const { pathToFileURL } = require("url");
-const { Command } = require("commander");
+const glob = require('glob');
+const path = require('path');
+const { pathToFileURL } = require('url');
+const { Command } = require('commander');
 
 let registry;
 try {
-  registry = require("@soara/cli/src/templates/soara-registry");
+  registry = require('@soara/cli/src/templates/soara-registry');
 } catch (err) {
   try {
-    registry = require(path.join(__dirname, "src/templates", "soara-registry"));
+    registry = require(path.join(__dirname, 'src/templates', 'soara-registry'));
   } catch (err) {
-    console.error("❌ Failed to load command registry:", err.message);
+    console.error('❌ Failed to load command registry:', err.message);
     process.exit(1);
   }
 }
 
 const { getCommands } = registry;
-const patterns = [
-  "src/common/soara-cli/cli.js",
-  "node_modules/@soara/**/src/common/soara-cli/cli.js",
-];
+const patterns = ['src/common/soara-cli/cli.js', 'node_modules/@soara/**/src/common/soara-cli/cli.js'];
 
-const allMatches = patterns.flatMap((pattern) =>
-  glob.sync(pattern, { absolute: true })
-);
+const allMatches = patterns.flatMap((pattern) => glob.sync(pattern, { absolute: true }));
 
 if (allMatches.length === 0) process.exit(0);
 
@@ -38,7 +33,7 @@ if (allMatches.length === 0) process.exit(0);
   }
 
   const program = new Command();
-  program.name("soara");
+  program.name('soara');
 
   const commands = getCommands();
   commands.forEach((cmd, name) => {
