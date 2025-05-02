@@ -19,6 +19,8 @@ exports.copyTemplate = (src, dest, name) => {
   const camelizeModuleName = this.camelize(name);
   const entries = fs.readdirSync(src, { withFileTypes: true });
 
+  if (entries.length === 0) return;
+
   for (const entry of entries) {
     const srcPath = path.join(src, entry.name);
     let destName = entry.name
@@ -34,6 +36,7 @@ exports.copyTemplate = (src, dest, name) => {
     const destPath = path.join(dest, destName);
 
     if (entry.isDirectory()) {
+      if (!fs.existsSync(destPath)) fs.mkdirSync(destPath, { recursive: true });
       this.copyTemplate(srcPath, destPath, name);
     } else {
       let content = fs.readFileSync(srcPath, 'utf8');
