@@ -1,6 +1,6 @@
 {
   "name": "@soara/cli",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "soara stubs cli",
   "main": "index.js",
   "scripts": {
