@@ -13,18 +13,18 @@ exports.camelize = (string) => {
     .join('-');
 };
 
-exports.copyTemplate = (src, dest, moduleName) => {
+exports.copyTemplate = (src, dest, name) => {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
 
-  const camelizeModuleName = this.camelize(moduleName);
+  const camelizeModuleName = this.camelize(name);
   const entries = fs.readdirSync(src, { withFileTypes: true });
 
   for (const entry of entries) {
     const srcPath = path.join(src, entry.name);
     let destName = entry.name
-      .replace(/__Name__/g, moduleName)
-      .replace(/__name__/g, moduleName.toLowerCase())
-      .replace(/__NAME__/g, moduleName.toUpperCase())
+      .replace(/__Name__/g, name)
+      .replace(/__name__/g, name.toLowerCase())
+      .replace(/__NAME__/g, name.toUpperCase())
       .replace(/__name-kebab__/g, camelizeModuleName);
 
     if (destName.endsWith('.stub')) {
@@ -34,13 +34,13 @@ exports.copyTemplate = (src, dest, moduleName) => {
     const destPath = path.join(dest, destName);
 
     if (entry.isDirectory()) {
-      copyTemplate(srcPath, destPath, moduleName);
+      this.copyTemplate(srcPath, destPath, name);
     } else {
       let content = fs.readFileSync(srcPath, 'utf8');
       content = content
-        .replace(/__Name__/g, moduleName)
-        .replace(/__name__/g, moduleName.toLowerCase())
-        .replace(/__NAME__/g, moduleName.toUpperCase())
+        .replace(/__Name__/g, name)
+        .replace(/__name__/g, name.toLowerCase())
+        .replace(/__NAME__/g, name.toUpperCase())
         .replace(/__name-kebab__/g, camelizeModuleName);
       fs.writeFileSync(destPath, content);
     }
