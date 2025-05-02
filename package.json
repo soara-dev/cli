@@ -15,7 +15,7 @@
     "cli"
   ],
   "author": "Soara",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "prettier": "^3.5.3"
   },
