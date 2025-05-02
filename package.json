@@ -1,6 +1,7 @@
 {
   "name": "@soara/cli",
   "version": "0.0.14",
+  "type": "module",
   "description": "soara stubs cli",
   "main": "index.js",
   "scripts": {
@@ -17,5 +18,13 @@
   "license": "ISC",
   "dependencies": {
     "prettier": "^3.5.3"
+  },
+  "devDependencies": {
+    "commander": "*",
+    "glob": "*"
+  },
+  "peerDependencies": {
+    "commander": "^13.1.0",
+    "glob": "^11.0.2"
   }
 }

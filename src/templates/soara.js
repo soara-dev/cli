@@ -1,15 +1,21 @@
 #!/usr/bin/env node
-const glob = require('glob');
-const path = require('path');
-const { pathToFileURL } = require('url');
-const { Command } = require('commander');
+import { glob } from 'glob';
+import path from 'path';
+import { pathToFileURL, fileURLToPath } from 'url';
+import { Command } from 'commander';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let registry;
+
 try {
-  registry = require('@soara/cli/src/templates/soara-registry');
+  registry = await import('@soara/cli/src/templates/soara-registry.js');
 } catch (err) {
   try {
-    registry = require(path.join(__dirname, 'src/templates', 'soara-registry'));
+    const fallbackPath = pathToFileURL(path.join(__dirname, 'src/templates', 'soara-registry.js')).href;
+    console.log(fallbackPath);
+    registry = await import(fallbackPath);
   } catch (err) {
     console.error('❌ Failed to load command registry:', err.message);
     process.exit(1);

@@ -1,7 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-exports.camelize = (string) => {
+/**
+ * Convert names like `MyExample:Command` to kebab-case e.g. `my-example-command`
+ * @param {string} string
+ * @returns {string}
+ */
+export function camelize(string) {
   return string
     .split(':')
     .map((part) =>
@@ -11,12 +16,18 @@ exports.camelize = (string) => {
         .toLowerCase()
     )
     .join('-');
-};
+}
 
-exports.copyTemplate = (src, dest, name) => {
+/**
+ * Copy template files from `src` to `dest`, replacing placeholders with the `name`
+ * @param {string} src - Source template path
+ * @param {string} dest - Destination path
+ * @param {string} name - Module name
+ */
+export function copyTemplate(src, dest, name) {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
 
-  const camelizeModuleName = this.camelize(name);
+  const camelizeModuleName = camelize(name);
   const entries = fs.readdirSync(src, { withFileTypes: true });
 
   if (entries.length === 0) return;
@@ -37,7 +48,7 @@ exports.copyTemplate = (src, dest, name) => {
 
     if (entry.isDirectory()) {
       if (!fs.existsSync(destPath)) fs.mkdirSync(destPath, { recursive: true });
-      this.copyTemplate(srcPath, destPath, name);
+      copyTemplate(srcPath, destPath, name); // recursive call
     } else {
       let content = fs.readFileSync(srcPath, 'utf8');
       content = content
@@ -48,4 +59,4 @@ exports.copyTemplate = (src, dest, name) => {
       fs.writeFileSync(destPath, content);
     }
   }
-};
+}
